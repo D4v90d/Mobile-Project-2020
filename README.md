@@ -17,7 +17,5 @@ Kotlin
 
 ## Credits
 - [Udacity](https://github.com/udacity)
-(- [SudKul](https://github.com/SudKul)
-- [Sean McQuillan](https://github.com/objcode)
-- [José](https://github.com/dnbit))
+([SudKul](https://github.com/SudKul), [Sean McQuillan](https://github.com/objcode), [José](https://github.com/dnbit))
 - [liaozp9112](https://github.com/liaozp9112)
