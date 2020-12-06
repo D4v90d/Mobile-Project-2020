@@ -1,5 +1,5 @@
 # Mobile-Project-2020 (Sleep Tracker)
-This repository will contain project from class mobile programming, about sleep tracker.
+This repository will contain project from class mobile programming 2020, about sleep tracker.
 
 ## Team Member
 - David Kurniawan Koswari (01082170028)
@@ -15,5 +15,8 @@ Kotlin
 - [Code for Additional Feature](https://github.com/liaozp9112/AlarmClock)
 
 ## Credits
-- @liaozp9112
-- @SudKul
+- [Udacity](https://github.com/udacity)
+-- [SudKul](https://github.com/SudKul)
+-- [Sean McQuillan](https://github.com/objcode)
+-- [José](https://github.com/dnbit)
+- [liaozp9112](https://github.com/liaozp9112)
