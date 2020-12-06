@@ -15,3 +15,5 @@ Kotlin
 - [Code for Additional Feature](https://github.com/liaozp9112/AlarmClock)
 
 ## Credits
+- @liaozp9112
+- @SudKul
