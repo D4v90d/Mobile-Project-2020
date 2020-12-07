@@ -112,19 +112,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageButton
+        <Button
             android:id="@+id/alarm_button"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="300dp"
-            android:background="#00000000"
-            android:scaleType="fitXY"
+            style="@style/SleepButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="325dp"
+            android:layout_marginEnd="@dimen/margin"
+            android:enabled="@{sleepTrackerViewModel.alarmButtonVisible}"
+            android:onClick="@{() -> sleepTrackerViewModel.onAlarm()}"
+            android:text="@string/alarm"
             app:layout_constraintBottom_toBottomOf="@+id/clear_button"
             app:layout_constraintEnd_toEndOf="@+id/scrollView2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/scrollView2"
-            app:srcCompat="@drawable/app_icon">
-        </ImageButton>
+            app:layout_constraintTop_toTopOf="@+id/scrollView2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

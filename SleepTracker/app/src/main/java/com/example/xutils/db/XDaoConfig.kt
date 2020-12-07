@@ -37,7 +37,7 @@ class XDaoConfig {
                     .setDbVersion(DB_VERSION)//设置数据库的版本号
                     .setTableCreateListener { _db, table ->
 
-                        if (table.name == Tables.T_ALARM_CLOCK.name){
+                        if (table.name == Tables.ALARMCLOCK.name){
                             println("${table.name} Created Successfully");
                         }
                     }

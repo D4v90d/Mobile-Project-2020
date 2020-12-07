@@ -2,7 +2,7 @@ package com.example
 
 import android.app.Application
 import com.example.xutils.db.DbTool
-import com.example.xutils.db.T_ALARM_CLOCK
+import com.example.xutils.db.AlarmClock
 import org.xutils.x
 import kotlin.properties.Delegates
 

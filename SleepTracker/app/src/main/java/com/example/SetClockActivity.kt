@@ -18,8 +18,8 @@ import android.widget.EditText
 import com.example.sleeptracker.R
 import com.example.tools.AlarmTools
 import com.example.tools.FileTools
+import com.example.xutils.db.AlarmClock
 import com.example.xutils.db.DbTool
-import com.example.xutils.db.T_ALARM_CLOCK
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,7 +31,7 @@ class SetClockActivity :BasicActivity() {
     //判断是新增还是修改,默认新增ADD
     private var TYPE : String = TYPE_ADD;
 
-    private var model = T_ALARM_CLOCK();
+    private var model = AlarmClock();
 
     //用于选择铃声后作相应的判断标记
     private val REQUEST_CODE_PICK_RINGTONE = 1
@@ -51,21 +51,21 @@ class SetClockActivity :BasicActivity() {
         card_repeat.setOnClickListener { alertDaySelect(); }
         card_note.setOnClickListener { alert_edit(); }
         card_sound.setOnClickListener { doPickPingtone(); }
-        repeat_text.text = model.REPEAT_DAY;
-        note_text.text = model.NOTE;
+        repeat_text.text = model.repeatDay;
+        note_text.text = model.note;
         sound_text.text =
-            FileTools.getFileName(FileTools.getRealPath(this,Uri.parse(model.SOUND)),"No Default Ringtone");
+            FileTools.getFileName(FileTools.getRealPath(this,Uri.parse(model.sound)),"No Default Ringtone");
         val bundle = intent.extras;
         if (bundle != null) {
             TYPE = bundle.getString("TYPE").toString()
         }
         if(TYPE==TYPE_UPDATE){
             model = bundle!!.getParcelable("MODEL")!!;
-            timepicker.currentHour = model.TIME.substring(0,model.TIME.indexOf(":")).toInt()
-            timepicker.currentMinute = model.TIME.substring(model.TIME.indexOf(":")+1).toInt();
-            repeat_text.text = model.REPEAT_DAY;
-            note_text.text = model.NOTE;
-            sound_text.text= FileTools.getFileName(FileTools.getRealPath(this, Uri.parse(model.SOUND)));
+            timepicker.currentHour = model.time.substring(0,model.time.indexOf(":")).toInt()
+            timepicker.currentMinute = model.time.substring(model.time.indexOf(":")+1).toInt();
+            repeat_text.text = model.repeatDay;
+            note_text.text = model.note;
+            sound_text.text= FileTools.getFileName(FileTools.getRealPath(this, Uri.parse(model.sound)));
         }
     }
 
@@ -73,7 +73,7 @@ class SetClockActivity :BasicActivity() {
         menuInflater.inflate(R.menu.menu_set_clock, menu)
         if (TYPE==TYPE_ADD){
             menu.findItem(R.id.action_delete).setVisible(false);
-            model.ID = UUID.randomUUID().toString();
+            model.alarmId = UUID.randomUUID().toString();
         }
         return true
     }
@@ -96,11 +96,11 @@ class SetClockActivity :BasicActivity() {
             WeekDAY.Friday.dayName,WeekDAY.Saturday.dayName,WeekDAY.Sunday.dayName);
 
         var daySelected = booleanArrayOf(false,false,false,false,false,false,false);
-        if (!model.REPEAT_DAY.isNullOrBlank()){
-            daySelected = booleanArrayOf(model.REPEAT_DAY.contains(WeekDAY.Monday.dayName),
-                model.REPEAT_DAY.contains(WeekDAY.Tuesday.dayName),model.REPEAT_DAY.contains(WeekDAY.Wednesday.dayName),
-                model.REPEAT_DAY.contains(WeekDAY.Thursday.dayName),model.REPEAT_DAY.contains(WeekDAY.Friday.dayName),
-                model.REPEAT_DAY.contains(WeekDAY.Saturday.dayName),model.REPEAT_DAY.contains(WeekDAY.Sunday.dayName));
+        if (!model.repeatDay.isNullOrBlank()){
+            daySelected = booleanArrayOf(model.repeatDay.contains(WeekDAY.Monday.dayName),
+                model.repeatDay.contains(WeekDAY.Tuesday.dayName),model.repeatDay.contains(WeekDAY.Wednesday.dayName),
+                model.repeatDay.contains(WeekDAY.Thursday.dayName),model.repeatDay.contains(WeekDAY.Friday.dayName),
+                model.repeatDay.contains(WeekDAY.Saturday.dayName),model.repeatDay.contains(WeekDAY.Sunday.dayName));
         }
 
         var newSelected :String = "" ;
@@ -114,8 +114,8 @@ class SetClockActivity :BasicActivity() {
                 for (i in daySelected.indices){
                     newSelected += if (daySelected[i]) dayList.get(i) else "";
                 }
-                model.REPEAT_DAY = if(newSelected.isNullOrBlank()) WeekDAY.Never.name else newSelected;
-                repeat_text.text  = model.REPEAT_DAY;
+                model.repeatDay = if(newSelected.isNullOrBlank()) WeekDAY.Never.name else newSelected;
+                repeat_text.text  = model.repeatDay;
             })
             .setNegativeButton("Cancel",null);
         daySelectDialog.show();
@@ -135,12 +135,12 @@ class SetClockActivity :BasicActivity() {
     private fun alert_edit() {
         val et = EditText(this)
         et.setSingleLine(true);
-        et.setText(model.NOTE)
+        et.setText(model.note)
         AlertDialog.Builder(this).setTitle("Please Enter a Label")
             .setView(et)
             .setPositiveButton("Confirm") { dialogInterface, i ->
-                model.NOTE = et.text.toString();
-                note_text.text = model.NOTE;
+                model.note = et.text.toString();
+                note_text.text = model.note;
             }.setNegativeButton("Cancel", null).show()
     }
 
@@ -168,8 +168,8 @@ class SetClockActivity :BasicActivity() {
         try {
             val pickedUri = data.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
             mRingtoneUri = pickedUri;
-            model.SOUND=mRingtoneUri.toString();
-            sound_text.text= FileTools.getFileName(FileTools.getRealPath(this, Uri.parse(model.SOUND)))
+            model.sound=mRingtoneUri.toString();
+            sound_text.text= FileTools.getFileName(FileTools.getRealPath(this, Uri.parse(model.sound)))
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -180,9 +180,9 @@ class SetClockActivity :BasicActivity() {
         var selectTime = (if(timepicker.currentHour<10) "0"+timepicker.currentHour else
             ""+timepicker.currentHour)+":"+ (if(timepicker.currentMinute<10) "0"+timepicker.currentMinute else
             ""+timepicker.currentMinute)
-        model.TIME = selectTime;
-        model.ACTIVE = "1";
-        model.UPDATE_TIME = SimpleDateFormat("yyyy-MM-dd HH:mm:ss" ).format(Date());
+        model.time = selectTime;
+        model.active = "1";
+        model.updateTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss" ).format(Date());
         DbTool.saveOrUpdate(model);
         setAlarmClock();
         finish();

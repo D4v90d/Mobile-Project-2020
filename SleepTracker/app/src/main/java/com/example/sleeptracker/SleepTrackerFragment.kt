@@ -1,27 +1,21 @@
 
 package com.example.sleeptracker
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.database.SleepDatabase
 import com.example.sleeptracker.databinding.FragmentSleepTrackerBinding
-import com.example.sleeptracker.SleepTrackerFragmentDirections
+import com.example.xutils.db.*
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_sleep_tracker.*
+import kotlinx.android.synthetic.main.fragment_sleep_tracker.view.*
 
 /**
  * A fragment with buttons to record start and end times for sleep, which are saved in
@@ -89,7 +83,28 @@ class SleepTrackerFragment : Fragment() {
                 )
                 // Reset state to make sure we only navigate once, even if the device
                 // has a configuration change.
-                sleepTrackerViewModel.doneNavigating()
+                sleepTrackerViewModel.doneNavigatingToSleepQuality()
+            }
+        })
+
+        sleepTrackerViewModel.navigateToContentActivity.observe(viewLifecycleOwner, Observer { alarm ->
+            alarm?.let {
+                // We need to get the navController from this, because button is not ready, and it
+                // just has to be a view. For some reason, this only matters if we hit stop again
+                // after using the back button, not if we hit stop and choose a quality.
+                // Also, in the Navigation Editor, for Quality -> Tracker, check "Inclusive" for
+                // popping the stack to get the correct behavior if we press stop multiple times
+                // followed by back.
+                // Also: https://stackoverflow.com/questions/28929637/difference-and-uses-of-oncreate-oncreateview-and-onactivitycreated-in-fra
+                this.findNavController().navigate(
+                    SleepTrackerFragmentDirections.actionSleepTrackerFragmentToAlarmFragment(
+
+                    )
+
+                )
+                // Reset state to make sure we only navigate once, even if the device
+                // has a configuration change.
+                sleepTrackerViewModel.doneNavigatingToContentActivity()
             }
         })
 

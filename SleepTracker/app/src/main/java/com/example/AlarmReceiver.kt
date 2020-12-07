@@ -3,7 +3,7 @@ package com.example
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.example.xutils.db.T_ALARM_CLOCK
+import com.example.xutils.db.AlarmClock
 import org.jetbrains.anko.startActivity
 
 class AlarmReceiver :BroadcastReceiver() {

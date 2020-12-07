@@ -61,6 +61,6 @@
         tools:layout="@layout/content_set_clock">
         <action
             android:id="@+id/action_alarm_fragment_to_sleep_tracker_fragment2"
-            app:destination="@id/sleep_tracker_fragment" />
+            app:destination="@id/content_set_clock" />
     </fragment>
 </navigation>

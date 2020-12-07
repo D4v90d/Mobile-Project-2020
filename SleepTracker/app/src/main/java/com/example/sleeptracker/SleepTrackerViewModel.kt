@@ -1,7 +1,6 @@
 package com.example.sleeptracker
 
 import android.app.Application
-import android.widget.ImageButton
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -10,6 +9,7 @@ import androidx.lifecycle.Transformations
 import com.example.database.SleepDatabaseDao
 import com.example.database.SleepNight
 import com.example.formatNights
+import com.example.xutils.db.*
 import kotlinx.coroutines.*
 
 /**
@@ -52,6 +52,9 @@ class SleepTrackerViewModel(
         it?.isNotEmpty()
     }
 
+    val alarmButtonVisible = Transformations.map(tonight) {
+        null == it
+    }
     /**
      * Request a toast by setting this value to true.
      *
@@ -72,6 +75,7 @@ class SleepTrackerViewModel(
      */
 
     private val _navigateToSleepQuality = MutableLiveData<SleepNight>()
+    private val _navigateToContentActivity = MutableLiveData<AlarmClock>()
     /**
      * Call this immediately after calling `show()` on a toast.
      *
@@ -83,19 +87,26 @@ class SleepTrackerViewModel(
         _showSnackbarEvent.value = false
     }
     /**
-     * If this is non-null, immediately navigate to [SleepQualityFragment] and call [doneNavigating]
+     * If this is non-null, immediately navigate to [SleepQualityFragment] and call [doneNavigatingToSleepQuality]
      */
     val navigateToSleepQuality: LiveData<SleepNight>
         get() = _navigateToSleepQuality
 
+    val navigateToContentActivity: LiveData<AlarmClock>
+        get() = _navigateToContentActivity
     /**
      * Call this immediately after navigating to [SleepQualityFragment]
      *
      * It will clear the navigation request, so if the user rotates their phone it won't navigate
      * twice.
      */
-    fun doneNavigating() {
+
+    fun doneNavigatingToSleepQuality() {
         _navigateToSleepQuality.value = null
+    }
+
+    fun doneNavigatingToContentActivity() {
+        _navigateToContentActivity.value = null
     }
 
     init {
@@ -185,6 +196,12 @@ class SleepTrackerViewModel(
 
         // Show a snackbar message, because it's friendly.
         _showSnackbarEvent.value = true
+    }
+
+    fun onAlarm(){
+        viewModelScope.launch {
+            _navigateToContentActivity.value
+        }
     }
 
 }

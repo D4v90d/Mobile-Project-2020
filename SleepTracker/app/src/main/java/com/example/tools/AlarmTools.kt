@@ -7,7 +7,7 @@ import android.content.Intent
 import com.example.AlockApp
 import com.example.AlarmReceiver
 import com.example.SetClockActivity
-import com.example.xutils.db.T_ALARM_CLOCK
+import com.example.xutils.db.AlarmClock
 import java.util.*
 
 class AlarmTools {
@@ -16,26 +16,26 @@ class AlarmTools {
 
         private var alarmManager = AlockApp.instance().getSystemService(Context.ALARM_SERVICE) as AlarmManager;
 
-        fun setAlarm(context :Context , model: T_ALARM_CLOCK){
+        fun setAlarm(context :Context , model: AlarmClock){
             var triggerAtTime = System.currentTimeMillis();
-            if (model.REPEAT_DAY== SetClockActivity.WeekDAY.Never.name){
+            if (model.repeatDay== SetClockActivity.WeekDAY.Never.name){
                 var calendar = Calendar.getInstance();
-                calendar.set(Calendar.HOUR_OF_DAY, model.TIME.substring(0,model.TIME.indexOf(":")).toInt());
-                calendar.set(Calendar.MINUTE,model.TIME.substring(model.TIME.indexOf(":")+1).toInt());
+                calendar.set(Calendar.HOUR_OF_DAY, model.time.substring(0,model.time.indexOf(":")).toInt());
+                calendar.set(Calendar.MINUTE,model.time.substring(model.time.indexOf(":")+1).toInt());
                 calendar.set(Calendar.SECOND,0);
                 var intent = Intent(context, AlarmReceiver::class.java);
                 intent.action = AlockApp.instance().packageName;
-                intent.putExtra("ID",model.ID);
+                intent.putExtra("ID",model.alarmId);
                 var pi = PendingIntent.getBroadcast(context,0,intent,0);
                 alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.timeInMillis,pi);
             }
         }
 
-        fun cancelAlarm(context :Context , model: T_ALARM_CLOCK){
-            if (model.REPEAT_DAY== SetClockActivity.WeekDAY.Never.name){
+        fun cancelAlarm(context :Context , model: AlarmClock){
+            if (model.repeatDay== SetClockActivity.WeekDAY.Never.name){
                 var intent = Intent(context, AlarmReceiver::class.java);
                 intent.action = AlockApp.instance().packageName;
-                intent.putExtra("ID",model.ID);
+                intent.putExtra("ID",model.alarmId);
                 var pi = PendingIntent.getBroadcast(context,0,intent,PendingIntent.FLAG_NO_CREATE);
                 if(pi !=null){
                     alarmManager.cancel(pi)

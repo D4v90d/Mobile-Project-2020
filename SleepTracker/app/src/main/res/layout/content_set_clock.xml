@@ -6,40 +6,40 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+        android:id="@+id/content_set_clock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <com.example.TimePickerView
             android:id="@+id/timepicker"
             android:layout_width="match_parent"
-            android:numbersBackgroundColor="@color/colorPrimary"
-            android:timePickerMode="spinner"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
-            >
+            android:numbersBackgroundColor="@color/colorPrimary"
+            android:timePickerMode="spinner">
 
         </com.example.TimePickerView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_repeat"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="@dimen/cardview_cornerRadius"
-            app:cardElevation="@dimen/cardview_cardElevation"
-            android:minHeight="@dimen/cardview_height"
-            android:background="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-           >
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@android:color/white"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:minHeight="@dimen/cardview_height"
+            app:cardCornerRadius="@dimen/cardview_cornerRadius"
+            app:cardElevation="@dimen/cardview_cardElevation">
 
             <LinearLayout
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="5dp">
 
                 <TextView
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center_vertical"
                     android:text="Repeat"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black" />
 
                 <TextView
                     android:id="@+id/repeat_text"
@@ -57,7 +57,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:singleLine="true"
-                    android:textColor="@android:color/darker_gray"/>
+                    android:textColor="@android:color/darker_gray" />
 
 
                 <ImageView
@@ -72,22 +72,22 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_sound"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:minHeight="@dimen/cardview_height"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="@dimen/cardview_cornerRadius"
-            app:cardElevation="@dimen/cardview_cardElevation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp">
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:minHeight="@dimen/cardview_height"
+            android:padding="5dp"
+            app:cardCornerRadius="@dimen/cardview_cornerRadius"
+            app:cardElevation="@dimen/cardview_cardElevation">
 
             <LinearLayout
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="5dp">
 
                 <TextView
@@ -105,7 +105,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:singleLine="true"
-                    android:textColor="@android:color/darker_gray"/>
+                    android:textColor="@android:color/darker_gray" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -118,22 +118,22 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_note"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:minHeight="@dimen/cardview_height"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardCornerRadius="@dimen/cardview_cornerRadius"
-            app:cardElevation="@dimen/cardview_cardElevation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:minHeight="@dimen/cardview_height"
+            app:cardCornerRadius="@dimen/cardview_cornerRadius"
+            app:cardElevation="@dimen/cardview_cardElevation">
 
             <LinearLayout
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal"
                 android:padding="5dp">
 
                 <TextView
@@ -149,9 +149,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
-                    android:singleLine="true"
                     android:layout_weight="1"
-                    android:textColor="@android:color/darker_gray"/>
+                    android:singleLine="true"
+                    android:textColor="@android:color/darker_gray" />
 
                 <ImageView
                     android:layout_width="wrap_content"

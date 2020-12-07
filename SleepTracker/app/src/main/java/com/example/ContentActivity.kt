@@ -7,7 +7,7 @@ import androidx.annotation.UiThread
 import android.view.View
 import com.example.tools.AlarmTools
 import com.example.xutils.db.DbTool
-import com.example.xutils.db.T_ALARM_CLOCK
+import com.example.xutils.db.AlarmClock
 import kotlinx.android.synthetic.main.layout_content.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.jetbrains.anko.doAsync
@@ -17,7 +17,7 @@ import com.example.sleeptracker.R
 
 class ContentActivity : BasicActivity() {
     var  mMediaPlayer = MediaPlayer();
-    private var model = T_ALARM_CLOCK();
+    private var model = AlarmClock();
     private var id :String ="";
     //
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,13 +30,13 @@ class ContentActivity : BasicActivity() {
         id = intent.getStringExtra("ID").toString()
         toolbar.title="It's time "
         doAsync {
-            model = DbTool.getDbManager().selector(T_ALARM_CLOCK::class.java).
+            model = DbTool.getDbManager().selector(AlarmClock::class.java).
             where("ID","=",id).findFirst();
             uiThread {
                 if (model==null) return@uiThread
-                note_text.text = model.NOTE;
+                note_text.text = model.note;
                 stop_rt.visibility= View.VISIBLE;
-                if (model.ACTIVE == "1"){
+                if (model.active == "1"){
                     initMediaPlayer();
                     stop_rt.setOnClickListener {
                         if (mMediaPlayer.isPlaying){
@@ -51,7 +51,7 @@ class ContentActivity : BasicActivity() {
 
     private fun initMediaPlayer() {
         try {
-            mMediaPlayer.setDataSource(this@ContentActivity, Uri.parse(model.SOUND));
+            mMediaPlayer.setDataSource(this@ContentActivity, Uri.parse(model.sound));
             mMediaPlayer.prepare()
             mMediaPlayer.start()
             mMediaPlayer.setOnCompletionListener {
@@ -71,8 +71,8 @@ class ContentActivity : BasicActivity() {
     }
 
     private fun resetActiveType(){
-        if(model!=null && model.REPEAT_DAY== SetClockActivity.WeekDAY.Never.name){
-            model.ACTIVE="0"
+        if(model!=null && model.repeatDay== SetClockActivity.WeekDAY.Never.name){
+            model.active="0"
             DbTool.saveOrUpdate(model);
             AlarmTools.cancelAlarm(this,model);
         }
