@@ -3,7 +3,7 @@ This repository will contain project from class mobile programming 2020, about s
 
 ## Team Member
 - David Kurniawan Koswari (01082170028)
-
+- Anastasya Syanne (01082180022)
 
 ## Language
 Kotlin
